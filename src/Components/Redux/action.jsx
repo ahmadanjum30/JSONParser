@@ -1,13 +1,12 @@
 import axios from 'axios'
 import CAR from './constants'
-import { store } from './store'
 
-export const requestCars = (data) => async (dispatch) => {
+export const requestCars = () => async (dispatch) => {
   dispatch({
     type: CAR.LOAD
   })
   try {
-    const json = await axios.get('data.json')
+    const json = await axios.get('MOCK_DATA.json')
     console.log(json)
     dispatch({
       type: CAR.LOAD_SUCCESS,

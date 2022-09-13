@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteCar, requestCars } from './action'
+import { deleteCar, requestCars } from './Redux/action'
 import data from './example.json'
-import '../App.css'
+import { Button, Box } from '@mui/material'
+import { Delete, Edit, Save, Phone, Today, TimeToLeave, LocationCity } from '@mui/icons-material'
+import moment from 'moment'
+import './styles.css'
 
 const Display = () => {
   const { carsData, isLoading } = useSelector((state) => state)
@@ -13,7 +16,10 @@ const Display = () => {
     model: '',
     year: '',
     price: '',
-    phone: ''
+    phone: '',
+    image: '',
+    city: '',
+    created_at: ''
   })
 
   const handleEditClick = (event, car) => {
@@ -24,13 +30,15 @@ const Display = () => {
 
       const formValues = {
         name: car.name,
-        price: car.price,
         model: car.model,
-        phone: car.phone,
         year: car.year,
-        image: car.image
+        price: car.price,
+        phone: car.phone,
+        image: car.image,
+        city: car.city,
+        created_at: car.created_at
       }
-      setEditFormData(formValues)
+      setEditFormData({ ...formValues })
     } else {
       setShowForm(null)
     }
@@ -61,10 +69,8 @@ const Display = () => {
     event.preventDefault()
 
     let index = carsData.findIndex((obj) => obj.id === car.id)
-    carsData.splice(index, 1, editFormData)
+    carsData.splice(index, 1, { ...editFormData })
     setShowForm(null)
-
-    console.log('form submitted ✅')
   }
 
   return (
@@ -79,7 +85,10 @@ const Display = () => {
               }}>
               <div className="card p-4">
                 <div className="row">
-                  <div className="col-md-3">
+                  <div className="col-md-4 border-end border-info">
+                    <img src={`${cars.image}`} />
+                  </div>
+                  <div className="col-md-4">
                     {showForm === cars.id ? (
                       <>
                         <input
@@ -112,38 +121,67 @@ const Display = () => {
                           placeholder="Price"
                           name="price"
                           onChange={handleEditFormChange}></input>
-                        <button type="submit">Save</button>
+                        <input
+                          type="text"
+                          required="required"
+                          placeholder="City"
+                          name="city"
+                          onChange={handleEditFormChange}></input>
+                        <input type="file" name="image" onChange={handleEditFormChange} />
+                        <br></br>
+                        <Button type="submit" color="primary" variant="outlined" endIcon={<Save />}>
+                          Save
+                        </Button>
                       </>
                     ) : (
                       <>
-                        <h1>{cars.name}</h1>
-                        <span>{cars.model}</span>
-                        <h3>{cars.year}</h3>
-                        <h4>{cars.phone}</h4>
-                        <h5>
-                          <b>Rs.{cars.price}</b>
-                        </h5>
+                        <div className="title-car">
+                          <h1>{cars.name}</h1>
+                        </div>
+                        <p>
+                          {<LocationCity />}
+                          {cars.city}
+                        </p>
+                        <Box className="info-car" sx={{ border: 1, borderRadius: '16px' }}>
+                          <span>
+                            {<TimeToLeave />}&nbsp;{cars.model}
+                          </span>
+                          <span>
+                            {<Today />}&nbsp;{cars.year}
+                          </span>
+                          <span>
+                            {<Phone />}&nbsp;
+                            {cars.phone}
+                          </span>
+                        </Box>
+
+                        <p className="created-at">
+                          Created: <b>{moment(cars.created_at).fromNow()}</b>
+                        </p>
                       </>
                     )}
                   </div>
-                  <div className="col-md-4">
-                    <img src={`${cars.image}`} height="200px" width="200px" />
-                  </div>
-                  <div className="col-md-4 mt-5">
-                    <button
+                  <div className="col-md-4 mt-5 p-4">
+                    <h2 className="price-car">
+                      <b>PKR {cars.price}</b>
+                    </h2>
+                    <Button
                       onClick={() => {
                         handleEditClick(event, cars)
                       }}
-                      className="btn btn-primary">
+                      className="btn btn-primary"
+                      endIcon={<Edit />}>
                       Edit
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       onClick={() => {
                         onDelete(cars.id)
                       }}
-                      className="btn btn-danger">
+                      color="error"
+                      variant="outlined"
+                      startIcon={<Delete />}>
                       Delete
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>

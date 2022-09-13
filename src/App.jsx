@@ -1,5 +1,5 @@
 import './App.css'
-import { store } from './Components/store'
+import { store } from './Components/Redux/store'
 import { Provider } from 'react-redux'
 import Display from './Components/display'
 

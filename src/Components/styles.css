@@ -1,0 +1,39 @@
+.price-car {
+  margin-bottom: 1em;
+}
+
+.card {
+  margin: 1em 10vh;
+}
+
+img {
+  height: 100%;
+  max-width: 100%;
+  object-fit: fill;
+  border-radius: 1em;
+}
+
+.info-car > span {
+  padding-left: 0.5em;
+  font-size: large;
+  color: gray;
+  flex: 1 1 33.3333%;
+  max-width: 33.333%;
+}
+
+.info-car {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.created-at {
+  margin: 2em 0em;
+}
+
+.title-car {
+  color: darkblue;
+}
+
+.price-car {
+  color: darkblue;
+}
