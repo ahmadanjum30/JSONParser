@@ -83,7 +83,7 @@ const Display = () => {
               onSubmit={() => {
                 handleSubmit(event, cars)
               }}>
-              <div className="card p-4">
+              <div className="card p-4 shadow-lg">
                 <div className="row">
                   <div className="col-md-4 border-end border-info">
                     <img src={`${cars.image}`} />
