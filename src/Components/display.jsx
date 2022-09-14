@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteCar, requestCars } from './Redux/action'
 import data from './example.json'
-import { Button, Box } from '@mui/material'
+import { Button, Box, TextField, Card } from '@mui/material'
 import { Delete, Edit, Save, Phone, Today, TimeToLeave, LocationCity } from '@mui/icons-material'
 import moment from 'moment'
 import './styles.css'
@@ -56,7 +56,7 @@ const Display = () => {
   const handleEditFormChange = (event) => {
     event.preventDefault()
 
-    const fieldName = event.target.getAttribute('name')
+    let fieldName = event.target.getAttribute('name')
     const fieldValue = event.target.value
 
     const newFormData = { ...editFormData }
@@ -83,58 +83,81 @@ const Display = () => {
               onSubmit={() => {
                 handleSubmit(event, cars)
               }}>
-              <div className="card p-4 shadow-lg">
+              <Card sx={{ p: 4, mt: 2, mb: 2, ml: 10, mr: 10, boxShadow: 3 }} variant="outlined">
                 <div className="row">
                   <div className="col-md-4 border-end border-info">
                     <img src={`${cars.image}`} />
                   </div>
-                  <div className="col-md-4">
-                    {showForm === cars.id ? (
-                      <>
-                        <input
-                          type="text"
-                          placeholder="Name"
+                  {showForm === cars.id ? (
+                    <>
+                      <div className="col-md-2">
+                        <TextField
+                          sx={{ m: 0.5 }}
                           name="name"
+                          label="Name"
+                          variant="outlined"
                           value={editFormData.name}
-                          onChange={handleEditFormChange}></input>
-                        <input
-                          type="text"
+                          onChange={handleEditFormChange}></TextField>
+                        <TextField
+                          sx={{ m: 0.5 }}
                           required="required"
-                          placeholder="Model"
+                          label="Model"
+                          variant="outlined"
                           name="model"
-                          onChange={handleEditFormChange}></input>
-                        <input
-                          type="text"
+                          onChange={handleEditFormChange}></TextField>
+                        <TextField
+                          sx={{ m: 0.5 }}
+                          id="outlined-basic"
+                          label="Year"
+                          variant="outlined"
                           required="required"
-                          placeholder="Year"
                           name="year"
-                          onChange={handleEditFormChange}></input>
-                        <input
-                          type="text"
+                          onChange={handleEditFormChange}></TextField>
+                        <TextField
+                          sx={{ m: 0.5 }}
+                          label="Phone No."
+                          variant="outlined"
                           required="required"
-                          placeholder="Phone No."
                           name="phone"
-                          onChange={handleEditFormChange}></input>
-                        <input
-                          type="text"
+                          onChange={handleEditFormChange}></TextField>
+                      </div>
+                      <div className="col-md-2">
+                        <TextField
+                          sx={{ m: 0.5, size: 'small' }}
+                          label="Price"
+                          variant="outlined"
                           required="required"
-                          placeholder="Price"
                           name="price"
-                          onChange={handleEditFormChange}></input>
-                        <input
-                          type="text"
+                          onChange={handleEditFormChange}></TextField>
+                        <TextField
+                          sx={{ m: 0.5 }}
+                          label="City"
+                          variant="outlined"
                           required="required"
-                          placeholder="City"
                           name="city"
-                          onChange={handleEditFormChange}></input>
-                        <input type="file" name="image" onChange={handleEditFormChange} />
-                        <br></br>
-                        <Button type="submit" color="primary" variant="outlined" endIcon={<Save />}>
+                          onChange={handleEditFormChange}></TextField>
+                        <Button
+                          variant="contained"
+                          component="label"
+                          className="m-3"
+                          onChange={handleEditFormChange}>
+                          Upload File
+                          <input type="file" name="image" hidden />
+                        </Button>
+
+                        <Button
+                          type="submit"
+                          color="primary"
+                          variant="outlined"
+                          endIcon={<Save />}
+                          className="m-3">
                           Save
                         </Button>
-                      </>
-                    ) : (
-                      <>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="col-md-4">
                         <div className="title-car">
                           <h1>{cars.name}</h1>
                         </div>
@@ -158,9 +181,9 @@ const Display = () => {
                         <p className="created-at">
                           Created: <b>{moment(cars.created_at).fromNow()}</b>
                         </p>
-                      </>
-                    )}
-                  </div>
+                      </div>
+                    </>
+                  )}
                   <div className="col-md-4 mt-5 p-4">
                     <h2 className="price-car">
                       <b>PKR {cars.price}</b>
@@ -184,7 +207,7 @@ const Display = () => {
                     </Button>
                   </div>
                 </div>
-              </div>
+              </Card>
             </form>
           </div>
         )
