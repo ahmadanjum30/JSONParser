@@ -5,7 +5,6 @@ import { Button, TextField } from '@mui/material'
 import { Save } from '@mui/icons-material'
 import { useDispatch } from 'react-redux'
 import { updateCar } from './Redux/action'
-import { useSelector } from 'react-redux'
 
 const EditForm = (props) => {
   const dispatch = useDispatch()
