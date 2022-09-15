@@ -1,12 +1,12 @@
 import './App.css'
 import { store } from './Components/Redux/store'
 import { Provider } from 'react-redux'
-import Display from './Components/display'
+import MainView from './Components/MainView'
 
 const App = () => {
   return (
     <Provider store={store}>
-      <Display />
+      <MainView />
     </Provider>
   )
 }

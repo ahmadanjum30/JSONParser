@@ -27,6 +27,7 @@ const reducer = (state = initalState, action) => {
       }
 
     case CAR.UPDATE_CAR:
+      state.carsData[state.carsData.findIndex((obj) => obj.id === action.car.id)] = action.car
       return {
         ...state
       }
