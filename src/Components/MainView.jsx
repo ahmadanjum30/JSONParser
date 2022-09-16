@@ -8,9 +8,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { deleteCar, requestCars } from './Redux/action'
 import data from './example.json'
 import { Button, Card, Container } from '@mui/material'
-import { Delete, Edit } from '@mui/icons-material'
+import { VerifiedUser, Delete, Edit } from '@mui/icons-material'
+import Protected from './Protected'
 
 const MainView = () => {
+  const [user, setUser] = useState(3)
   const dispatch = useDispatch()
   const { carsData, isLoading } = useSelector((state) => state)
   const [showForm, setShowForm] = useState(null)
@@ -29,9 +31,9 @@ const MainView = () => {
     dispatch(deleteCar(index))
   }
 
-  const handleChange = React.useCallback(() => {
-    setShowForm(null)
-  }, [])
+  const addUser = () => {
+    setUser(((user + 1) % 5) + 1)
+  }
 
   return (
     <>
@@ -46,7 +48,7 @@ const MainView = () => {
                 </div>
                 {showForm === cars.id ? (
                   <div className="col-md-4">
-                    <EditForm cars={cars} onChange={handleChange} />
+                    <EditForm cars={cars} />
                   </div>
                 ) : (
                   <CarInfo cars={cars} />
@@ -55,22 +57,37 @@ const MainView = () => {
                   <h2 className="price-car">
                     <b>PKR {cars.price}</b>
                   </h2>
+
+                  <Protected isLoggedIn={user === cars.user}>
+                    <Button
+                      onClick={() => {
+                        handleEditClick(event, cars)
+                      }}
+                      className="btn btn-primary"
+                      type="submit"
+                      endIcon={<Edit />}>
+                      {showForm === cars.id ? 'Back' : 'Edit'}
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        onDelete(cars.id)
+                      }}
+                      color="error"
+                      variant="outlined"
+                      startIcon={<Delete />}>
+                      Delete
+                    </Button>
+                  </Protected>
+
                   <Button
                     onClick={() => {
-                      handleEditClick(event, cars)
+                      addUser()
                     }}
-                    className="btn btn-primary"
-                    endIcon={<Edit />}>
-                    Edit
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      onDelete(cars.id)
-                    }}
-                    color="error"
+                    sx={{ m: 2 }}
+                    color="success"
                     variant="outlined"
-                    startIcon={<Delete />}>
-                    Delete
+                    startIcon={<VerifiedUser />}>
+                    User+1
                   </Button>
                 </div>
               </div>

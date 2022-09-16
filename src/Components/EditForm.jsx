@@ -5,6 +5,9 @@ import { Button, TextField } from '@mui/material'
 import { Save } from '@mui/icons-material'
 import { useDispatch } from 'react-redux'
 import { updateCar } from './Redux/action'
+import { ToastContainer, toast } from 'material-react-toastify'
+
+import 'material-react-toastify/dist/ReactToastify.css'
 
 const EditForm = (props) => {
   const dispatch = useDispatch()
@@ -19,12 +22,22 @@ const EditForm = (props) => {
       phone: props.cars.phone,
       image: props.cars.image,
       city: props.cars.city,
+      user: props.cars.user,
       created_at: props.cars.created_at
     },
     onSubmit: (values) => {
       console.log(values)
       dispatch(updateCar(values))
-      props.onChange
+      toast.success('Saved Successfully!!!', {
+        position: 'top-left',
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        toastId: 'Saved Successfully!!!'
+      })
     }
   })
 
@@ -109,6 +122,17 @@ const EditForm = (props) => {
           </div>
         </div>
       </form>
+      <ToastContainer
+        position="top-left"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   )
 }
