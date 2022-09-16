@@ -6,7 +6,6 @@ import EditForm from './EditForm'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteCar, requestCars } from './Redux/action'
-import data from './example.json'
 import { Button, Card, Container } from '@mui/material'
 import { VerifiedUser, Delete, Edit } from '@mui/icons-material'
 import Protected from './Protected'
@@ -17,13 +16,12 @@ const MainView = () => {
   const { carsData, isLoading } = useSelector((state) => state)
   const [showForm, setShowForm] = useState(null)
 
-  const handleEditClick = (event, car) => {
-    event.preventDefault()
+  const handleEditClick = (car) => {
     showForm === null ? setShowForm(car.id) : setShowForm(null)
   }
 
   useEffect(() => {
-    dispatch(requestCars(data))
+    dispatch(requestCars())
   }, [])
 
   const onDelete = (car) => {
@@ -61,7 +59,7 @@ const MainView = () => {
                   <Protected isLoggedIn={user === cars.user}>
                     <Button
                       onClick={() => {
-                        handleEditClick(event, cars)
+                        handleEditClick(cars)
                       }}
                       className="btn btn-primary"
                       type="submit"

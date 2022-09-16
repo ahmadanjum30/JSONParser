@@ -26,7 +26,7 @@ const EditForm = (props) => {
       created_at: props.cars.created_at
     },
     onSubmit: (values) => {
-      console.log(values)
+      values.created_at = Date()
       dispatch(updateCar(values))
       toast.success('Saved Successfully!!!', {
         position: 'top-left',
