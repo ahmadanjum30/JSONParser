@@ -10,7 +10,7 @@ import { deleteCar, requestCars } from './Redux/action'
 import { Button, Card, Container } from '@mui/material'
 import { VerifiedUser, Delete, Edit } from '@mui/icons-material'
 import { Box } from '@mui/system'
-import { ArrowForwardIos, ArrowBackIosNew } from '@mui/icons-material'
+import { ArrowForwardIos, ArrowBackIos } from '@mui/icons-material'
 
 const MainView = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -51,7 +51,7 @@ const MainView = () => {
           onClick={() => {
             handlePagination(false)
           }}
-          startIcon={<ArrowBackIosNew />}
+          startIcon={<ArrowBackIos />}
           disabled={currentPage <= 1}>
           Back
         </Button>
