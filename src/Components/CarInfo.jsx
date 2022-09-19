@@ -1,37 +1,52 @@
 import React from 'react'
 import moment from 'moment/moment'
 
-import { Box } from '@mui/material'
-import { Phone, Today, TimeToLeave, LocationCity } from '@mui/icons-material'
+import { Box, Typography, Grid } from '@mui/material'
+import { LocationCity } from '@mui/icons-material'
 
 const CarInfo = ({ cars }) => {
   return (
     <>
-      <div className="col-md-4">
-        <div className="title-car">
-          <h1>{cars.name}</h1>
-        </div>
-        <p>
+      <Grid item md={4}>
+        <Box className="title-car">
+          <Typography variant="h4">
+            {cars.name} {cars.model}
+          </Typography>
+        </Box>
+        <Typography variant="p">
           {<LocationCity />}
           {cars.city}
-        </p>
-        <Box className="info-car" sx={{ border: 1, borderRadius: '16px' }}>
-          <span>
-            {<TimeToLeave />}&nbsp;{cars.model}
-          </span>
-          <span>
-            {<Today />}&nbsp;{cars.year}
-          </span>
-          <span>
-            {<Phone />}&nbsp;
-            {cars.phone}
-          </span>
-        </Box>
+        </Typography>
 
-        <p className="created-at">
-          Updated: <b>{moment(cars.created_at).fromNow()}</b>
-        </p>
-      </div>
+        <Box sx={{ color: 'gray', mt: 2 }}>
+          <Typography variant="p" sx={{ borderRight: '0.1em solid gray', padding: '0.5em' }}>
+            {cars.year}
+          </Typography>
+
+          <Typography variant="p" sx={{ borderRight: '0.1em solid gray', padding: '0.5em' }}>
+            {cars.km}km
+          </Typography>
+
+          <Typography variant="p" sx={{ borderRight: '0.1em solid gray', padding: '0.5em' }}>
+            {cars.engine}
+          </Typography>
+
+          <Typography variant="p" sx={{ borderRight: '0.1em solid gray', padding: '0.5em' }}>
+            {cars.power} cc
+          </Typography>
+
+          <Typography variant="p" sx={{ padding: '0.5em' }}>
+            {cars.transmission}
+          </Typography>
+        </Box>
+        <br></br>
+        <Typography variant="p" sx={{ m: 2 }}>
+          Updated:{' '}
+          <Box component="span" sx={{ fontWeight: 'bold' }}>
+            {moment(cars.updated_at).fromNow()}
+          </Box>
+        </Typography>
+      </Grid>
     </>
   )
 }

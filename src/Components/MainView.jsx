@@ -3,21 +3,26 @@ import './styles.css'
 import CarInfo from './CarInfo'
 import EditForm from './EditForm'
 import Protected from './Protected'
+import Cookies from 'universal-cookie/cjs/Cookies'
 
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteCar, requestCars } from './Redux/action'
-import { Button, Card, Container } from '@mui/material'
-import { VerifiedUser, Delete, Edit } from '@mui/icons-material'
+import { Button, Card, Container, Typography, Grid } from '@mui/material'
+import { Delete, Edit } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import { ArrowForwardIos, ArrowBackIos } from '@mui/icons-material'
+import { Phone } from '@mui/icons-material'
+import Login from './Login'
 
 const MainView = () => {
   const [currentPage, setCurrentPage] = useState(1)
-  const [user, setUser] = useState(3)
   const dispatch = useDispatch()
   const { carsData, isLoading } = useSelector((state) => state)
   const [showForm, setShowForm] = useState(null)
+  const cookies = new Cookies()
+  const [loggedIn, setLoggedIn] = useState(null)
+  const [showPhone, setShowPhone] = useState([])
 
   const handleEditClick = (car) => {
     showForm === null ? setShowForm(car.id) : setShowForm(null)
@@ -25,15 +30,12 @@ const MainView = () => {
 
   useEffect(() => {
     dispatch(requestCars())
+    setLoggedIn(cookies.get('myUser'))
   }, [])
 
   const onDelete = (car) => {
     let index = carsData.findIndex((obj) => obj.id === car)
     dispatch(deleteCar(index))
-  }
-
-  const addUser = () => {
-    setUser(((user + 1) % 5) + 1)
   }
 
   const handlePagination = (isNext) => {
@@ -44,8 +46,27 @@ const MainView = () => {
     }
   }
 
+  const handleSignOut = () => {
+    setLoggedIn(null)
+    cookies.remove('myUser', { path: '/' })
+  }
+
+  const togglePhone = (id) => {
+    setShowPhone(showPhone.concat(id))
+  }
+
   return (
     <>
+      {loggedIn == undefined ? (
+        <Login />
+      ) : (
+        <Button
+          onClick={() => {
+            handleSignOut()
+          }}>
+          Sign Out
+        </Button>
+      )}
       <Box display="flex" alignItems="center" justifyContent="center">
         <Button
           onClick={() => {
@@ -60,70 +81,81 @@ const MainView = () => {
             handlePagination(true)
           }}
           endIcon={<ArrowForwardIos />}
-          disabled={currentPage * 10 >= carsData.length}>
+          disabled={carsData && currentPage * 10 >= carsData.length}>
           Next
         </Button>
       </Box>
-      {isLoading && <div className="loading">Data loading...</div>}
-      {carsData.map((cars, index) => {
-        return (
-          <Container key={cars.id}>
-            {index >= (currentPage - 1) * 10 && index < currentPage * 10 && (
-              <Card sx={{ p: 4, mt: 2, mb: 2, ml: 10, mr: 10, boxShadow: 3 }} variant="outlined">
-                <div className="row">
-                  <div className="col-md-4 border-end border-info">
-                    <img src={`${cars.image}`} />
-                  </div>
-                  {showForm === cars.id ? (
-                    <div className="col-md-4">
-                      <EditForm cars={cars} />
-                    </div>
-                  ) : (
-                    <CarInfo cars={cars} />
-                  )}
-                  <div className="col-md-4 mt-5 p-4">
-                    <h2 className="price-car">
-                      <b>PKR {cars.price}</b>
-                    </h2>
+      {isLoading && <Box className="loading">Data loading...</Box>}
+      {carsData &&
+        carsData.map((cars, index) => {
+          return (
+            <Container key={cars.id}>
+              {index >= (currentPage - 1) * 10 && index < currentPage * 10 && (
+                <Card sx={{ mt: 1, mb: 2, boxShadow: 5, padding: 2 }} variant="outlined">
+                  <Grid container spacing={2}>
+                    <Grid item md={4} sx={{ height: 200 }}>
+                      <img src={`${cars.image}`} />
+                    </Grid>
+                    {showForm === cars.id ? (
+                      <Grid item md={4}>
+                        <EditForm cars={cars} />
+                      </Grid>
+                    ) : (
+                      <CarInfo cars={cars} />
+                    )}
+                    <Grid item md={4} textAlign="end">
+                      <Typography variant="h5" sx={{ fontWeight: 'bold' }} className="price-car">
+                        PKR {cars.price / 100000} Lacs
+                      </Typography>
+                      <Typography variant="p">
+                        <Typography component="span" sx={{ background: 'lightgray' }}>
+                          {cars.ownership.toUpperCase()}
+                        </Typography>
+                      </Typography>
+                      <Typography>{cars.terms} Total Terms</Typography>
+                      <Box sx={{ mt: 1, mb: 2 }}>
+                        {showPhone.includes(cars.id) ? (
+                          <Typography fontWeight="bold">{cars.phone}</Typography>
+                        ) : (
+                          <Button
+                            onClick={() => togglePhone(cars.id)}
+                            startIcon={<Phone />}
+                            color="success"
+                            variant="contained">
+                            Click to Show Phone
+                          </Button>
+                        )}{' '}
+                      </Box>
 
-                    <Protected isLoggedIn={user === cars.user}>
-                      <Button
-                        onClick={() => {
-                          handleEditClick(cars)
-                        }}
-                        className="btn btn-primary"
-                        type="submit"
-                        endIcon={<Edit />}>
-                        {showForm === cars.id ? 'Back' : 'Edit'}
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          onDelete(cars.id)
-                        }}
-                        color="error"
-                        variant="outlined"
-                        startIcon={<Delete />}>
-                        Delete
-                      </Button>
-                    </Protected>
-
-                    <Button
-                      onClick={() => {
-                        addUser()
-                      }}
-                      sx={{ m: 2 }}
-                      color="success"
-                      variant="outlined"
-                      startIcon={<VerifiedUser />}>
-                      User+1
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            )}
-          </Container>
-        )
-      })}
+                      {loggedIn && (
+                        <Protected isLoggedIn={loggedIn.id === cars.user}>
+                          <Button
+                            onClick={() => {
+                              handleEditClick(cars)
+                            }}
+                            color="primary"
+                            type="submit"
+                            endIcon={<Edit />}>
+                            {showForm === cars.id ? 'Back' : 'Edit'}
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              onDelete(cars.id)
+                            }}
+                            color="error"
+                            variant="outlined"
+                            startIcon={<Delete />}>
+                            Delete
+                          </Button>
+                        </Protected>
+                      )}
+                    </Grid>
+                  </Grid>
+                </Card>
+              )}
+            </Container>
+          )
+        })}
     </>
   )
 }

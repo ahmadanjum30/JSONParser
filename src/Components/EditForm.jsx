@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useFormik } from 'formik'
-import { Button, TextField } from '@mui/material'
+import { Button, TextField, Grid } from '@mui/material'
 import { Save } from '@mui/icons-material'
 import { useDispatch } from 'react-redux'
 import { updateCar } from './Redux/action'
@@ -23,7 +23,11 @@ const EditForm = (props) => {
       image: props.cars.image,
       city: props.cars.city,
       user: props.cars.user,
-      created_at: props.cars.created_at
+      engine: props.cars.engine,
+      power: props.cars.power,
+      transmission: props.cars.transmission,
+      km: props.cars.km,
+      created_at: props.cars.updated_at
     },
     onSubmit: (values) => {
       values.created_at = Date()
@@ -48,8 +52,8 @@ const EditForm = (props) => {
           e.preventDefault()
           formik.handleSubmit()
         }}>
-        <div className="row">
-          <div className="col-md-6">
+        <Grid container spacing={2}>
+          <Grid item md={6}>
             <TextField
               sx={{ m: 0.5 }}
               name="name"
@@ -83,8 +87,8 @@ const EditForm = (props) => {
               name="phone"
               value={formik.values.phone}
               onChange={formik.handleChange}></TextField>
-          </div>
-          <div className="col-md-6">
+          </Grid>
+          <Grid item md={6}>
             <TextField
               sx={{ m: 0.5, size: 'small' }}
               label="Price"
@@ -119,8 +123,8 @@ const EditForm = (props) => {
               endIcon={<Save />}>
               Save
             </Button>
-          </div>
-        </div>
+          </Grid>
+        </Grid>
       </form>
       <ToastContainer
         position="top-left"

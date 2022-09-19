@@ -1,5 +1,6 @@
 import axios from 'axios'
 import CAR from './constants'
+import { USER } from './constants'
 
 export const requestCars = () => async (dispatch) => {
   dispatch({
@@ -8,7 +9,6 @@ export const requestCars = () => async (dispatch) => {
 
   try {
     const json = await axios.get('MOCK_DATA.json')
-    console.log(json)
     dispatch({
       type: CAR.LOAD_SUCCESS,
       carsData: json.data,
@@ -35,4 +35,17 @@ export const updateCar = (car) => async (dispatch) => {
     type: CAR.UPDATE_CAR,
     car
   })
+}
+
+export const userLogin = (user) => async (dispatch) => {
+  try {
+    const json = await axios.get('USER_DATA.json')
+    dispatch({
+      type: USER.LOGIN,
+      usersData: json.data,
+      user
+    })
+  } catch (e) {
+    return
+  }
 }

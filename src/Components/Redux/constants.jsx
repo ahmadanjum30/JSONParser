@@ -5,4 +5,8 @@ const CAR = {
   UPDATE_CAR: 'UPDATE_CAR'
 }
 
+export const USER = {
+  LOGIN: 'LOGIN'
+}
+
 export default CAR
