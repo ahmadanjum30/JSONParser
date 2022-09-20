@@ -11,7 +11,7 @@ import { deleteCar, requestCars } from './Redux/action'
 import { Button, Card, Container, Typography, Grid } from '@mui/material'
 import { Delete, Edit } from '@mui/icons-material'
 import { Box } from '@mui/system'
-import { ArrowForwardIos, ArrowBackIos } from '@mui/icons-material'
+import { ArrowForwardIos, ArrowBackIos, Error } from '@mui/icons-material'
 import { Phone } from '@mui/icons-material'
 import Login from './Login'
 
@@ -91,68 +91,88 @@ const MainView = () => {
           return (
             <Container key={cars.id}>
               {index >= (currentPage - 1) * 10 && index < currentPage * 10 && (
-                <Card sx={{ mt: 1, mb: 2, boxShadow: 5, padding: 2 }} variant="outlined">
-                  <Grid container spacing={2}>
-                    <Grid item md={4} sx={{ height: 200 }}>
-                      <img src={`${cars.image}`} />
-                    </Grid>
-                    {showForm === cars.id ? (
-                      <Grid item md={4}>
-                        <EditForm cars={cars} />
+                <Card
+                  sx={{
+                    mt: 1,
+                    mb: 2,
+                    boxShadow: 5
+                  }}
+                  variant="outlined">
+                  {cars.featured && (
+                    <Typography
+                      component="span"
+                      sx={{
+                        position: 'absolute',
+                        backgroundColor: 'red',
+                        padding: 0.5,
+                        color: 'white'
+                      }}>
+                      FEATURED {<Error />}
+                    </Typography>
+                  )}
+                  <Box sx={{ padding: 2 }}>
+                    <Grid container spacing={2}>
+                      <Grid item md={4} sx={{ height: 200 }}>
+                        <img src={`${cars.image}`} />
                       </Grid>
-                    ) : (
-                      <CarInfo cars={cars} />
-                    )}
-                    <Grid item md={4} textAlign="end">
-                      <Typography variant="h5" sx={{ fontWeight: 'bold' }} className="price-car">
-                        PKR {cars.price / 100000} Lacs
-                      </Typography>
-                      <Typography variant="p">
-                        <Typography
-                          component="span"
-                          sx={{ background: 'lightgray', fontWeight: 'bold' }}>
-                          {cars.ownership.toUpperCase()}
-                        </Typography>
-                      </Typography>
-                      <Typography>{cars.terms} Total Terms</Typography>
-                      <Box sx={{ mt: 1, mb: 2 }}>
-                        {showPhone.includes(cars.id) ? (
-                          <Typography fontWeight="bold">{cars.phone}</Typography>
-                        ) : (
-                          <Button
-                            onClick={() => togglePhone(cars.id)}
-                            startIcon={<Phone />}
-                            color="success"
-                            variant="contained">
-                            Click to Show Phone
-                          </Button>
-                        )}{' '}
-                      </Box>
-
-                      {loggedIn && (
-                        <Protected isLoggedIn={loggedIn.id === cars.user}>
-                          <Button
-                            onClick={() => {
-                              handleEditClick(cars)
-                            }}
-                            color="primary"
-                            type="submit"
-                            endIcon={<Edit />}>
-                            {showForm === cars.id ? 'Back' : 'Edit'}
-                          </Button>
-                          <Button
-                            onClick={() => {
-                              onDelete(cars.id)
-                            }}
-                            color="error"
-                            variant="outlined"
-                            startIcon={<Delete />}>
-                            Delete
-                          </Button>
-                        </Protected>
+                      {showForm === cars.id ? (
+                        <Grid item md={4}>
+                          <EditForm cars={cars} />
+                        </Grid>
+                      ) : (
+                        <CarInfo cars={cars} />
                       )}
+                      <Grid item md={4} textAlign="end">
+                        <Typography variant="h5" sx={{ fontWeight: 'bold' }} className="price-car">
+                          PKR {cars.price / 100000} Lacs
+                        </Typography>
+                        <Typography variant="p">
+                          <Typography
+                            component="span"
+                            sx={{ background: 'lightgray', fontWeight: 'bold' }}>
+                            {cars.ownership.toUpperCase()}
+                          </Typography>
+                        </Typography>
+                        <Typography>{cars.terms} Total Terms</Typography>
+                        <Box sx={{ mt: 1, mb: 2 }}>
+                          {showPhone.includes(cars.id) ? (
+                            <Typography fontWeight="bold">{cars.phone}</Typography>
+                          ) : (
+                            <Button
+                              onClick={() => togglePhone(cars.id)}
+                              startIcon={<Phone />}
+                              color="success"
+                              variant="contained">
+                              Click to Show Phone
+                            </Button>
+                          )}{' '}
+                        </Box>
+
+                        {loggedIn && (
+                          <Protected isLoggedIn={loggedIn.id === cars.user}>
+                            <Button
+                              onClick={() => {
+                                handleEditClick(cars)
+                              }}
+                              color="primary"
+                              type="submit"
+                              endIcon={<Edit />}>
+                              {showForm === cars.id ? 'Back' : 'Edit'}
+                            </Button>
+                            <Button
+                              onClick={() => {
+                                onDelete(cars.id)
+                              }}
+                              color="error"
+                              variant="outlined"
+                              startIcon={<Delete />}>
+                              Delete
+                            </Button>
+                          </Protected>
+                        )}
+                      </Grid>
                     </Grid>
-                  </Grid>
+                  </Box>
                 </Card>
               )}
             </Container>
