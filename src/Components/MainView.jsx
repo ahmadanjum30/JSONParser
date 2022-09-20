@@ -4,6 +4,7 @@ import CarInfo from './CarInfo'
 import EditForm from './EditForm'
 import Protected from './Protected'
 import Cookies from 'universal-cookie/cjs/Cookies'
+import Login from './Login'
 
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
@@ -13,7 +14,7 @@ import { Delete, Edit } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import { ArrowForwardIos, ArrowBackIos, Error } from '@mui/icons-material'
 import { Phone } from '@mui/icons-material'
-import Login from './Login'
+import { ToastContainer, toast } from 'material-react-toastify'
 
 const MainView = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -117,7 +118,22 @@ const MainView = () => {
                       </Grid>
                       {showForm === cars.id ? (
                         <Grid item md={4}>
-                          <EditForm cars={cars} />
+                          <EditForm
+                            cars={cars}
+                            onChange={() => {
+                              toast.success('Saved Successfully!!!', {
+                                position: 'top-right',
+                                autoClose: 3000,
+                                hideProgressBar: true,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                toastId: 'Saved Successfully!!!'
+                              })
+                              setShowForm(null)
+                            }}
+                          />
                         </Grid>
                       ) : (
                         <CarInfo cars={cars} />
@@ -145,7 +161,7 @@ const MainView = () => {
                               variant="contained">
                               Click to Show Phone
                             </Button>
-                          )}{' '}
+                          )}
                         </Box>
 
                         {loggedIn && (
@@ -178,6 +194,17 @@ const MainView = () => {
             </Container>
           )
         })}
+      <ToastContainer
+        position="top-left"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   )
 }

@@ -27,12 +27,13 @@ const Login = () => {
           sx={{ m: 0.5 }}
           name="email"
           label="email"
+          required={true}
           variant="outlined"
           value={formik.values.email}
           onChange={formik.handleChange}></TextField>
         <TextField
           sx={{ m: 0.5 }}
-          required="required"
+          required={true}
           label="password"
           variant="outlined"
           type="password"

@@ -5,7 +5,6 @@ import { Button, TextField, Grid } from '@mui/material'
 import { Save } from '@mui/icons-material'
 import { useDispatch } from 'react-redux'
 import { updateCar } from './Redux/action'
-import { ToastContainer, toast } from 'material-react-toastify'
 
 import 'material-react-toastify/dist/ReactToastify.css'
 
@@ -34,16 +33,7 @@ const EditForm = (props) => {
     onSubmit: (values) => {
       values.created_at = Date()
       dispatch(updateCar(values))
-      toast.success('Saved Successfully!!!', {
-        position: 'top-left',
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        toastId: 'Saved Successfully!!!'
-      })
+      props.onChange()
     }
   })
 
@@ -62,11 +52,10 @@ const EditForm = (props) => {
               label="Name"
               variant="outlined"
               value={formik.values.name}
-              onSubmit
               onChange={formik.handleChange}></TextField>
             <TextField
               sx={{ m: 0.5 }}
-              required="required"
+              required={true}
               label="Model"
               variant="outlined"
               name="model"
@@ -77,7 +66,7 @@ const EditForm = (props) => {
               id="outlined-basic"
               label="Year"
               variant="outlined"
-              required="required"
+              required={true}
               name="year"
               value={formik.values.year}
               onChange={formik.handleChange}></TextField>
@@ -85,7 +74,7 @@ const EditForm = (props) => {
               sx={{ m: 0.5 }}
               label="Phone No."
               variant="outlined"
-              required="required"
+              required={true}
               name="phone"
               value={formik.values.phone}
               onChange={formik.handleChange}></TextField>
@@ -95,7 +84,7 @@ const EditForm = (props) => {
               sx={{ m: 0.5, size: 'small' }}
               label="Price"
               variant="outlined"
-              required="required"
+              required={true}
               value={formik.values.price}
               name="price"
               onChange={formik.handleChange}></TextField>
@@ -103,7 +92,7 @@ const EditForm = (props) => {
               sx={{ m: 0.5 }}
               label="City"
               variant="outlined"
-              required="required"
+              required={true}
               value={formik.values.city}
               name="city"
               onChange={formik.handleChange}></TextField>
@@ -128,17 +117,6 @@ const EditForm = (props) => {
           </Grid>
         </Grid>
       </form>
-      <ToastContainer
-        position="top-left"
-        autoClose={1000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </>
   )
 }
