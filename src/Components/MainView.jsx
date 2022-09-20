@@ -108,7 +108,9 @@ const MainView = () => {
                         PKR {cars.price / 100000} Lacs
                       </Typography>
                       <Typography variant="p">
-                        <Typography component="span" sx={{ background: 'lightgray' }}>
+                        <Typography
+                          component="span"
+                          sx={{ background: 'lightgray', fontWeight: 'bold' }}>
                           {cars.ownership.toUpperCase()}
                         </Typography>
                       </Typography>
