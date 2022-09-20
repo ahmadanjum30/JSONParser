@@ -28,7 +28,8 @@ const EditForm = (props) => {
       transmission: props.cars.transmission,
       km: props.cars.km,
       updated_at: props.cars.updated_at,
-      ownership: props.cars.ownership
+      ownership: props.cars.ownership,
+      featured: props.cars.featured
     },
     onSubmit: (values) => {
       values.created_at = Date()
