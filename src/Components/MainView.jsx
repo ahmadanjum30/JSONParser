@@ -67,7 +67,9 @@ const MainView = () => {
             handlePagination(true)
           }}
           endIcon={<ArrowForwardIos />}
-          disabled={carsData && currentPage * 10 >= carsData.length}>
+          disabled={
+            getData(carsData, query) && currentPage * 10 >= getData(carsData, query).length
+          }>
           Next
         </Button>
       </Box>
