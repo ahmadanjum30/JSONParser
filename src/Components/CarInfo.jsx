@@ -9,9 +9,7 @@ const CarInfo = ({ cars }) => {
     <>
       <Grid item md={4}>
         <Box className="title-car">
-          <Typography variant="h4">
-            {cars.name} {cars.model}
-          </Typography>
+          <Typography variant="h4">{cars.name}</Typography>
         </Box>
         <Typography variant="p">
           {<LocationCity />}
