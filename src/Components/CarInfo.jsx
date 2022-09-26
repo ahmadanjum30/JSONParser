@@ -4,44 +4,44 @@ import moment from 'moment/moment'
 import { Box, Typography, Grid } from '@mui/material'
 import { LocationCity } from '@mui/icons-material'
 
-const CarInfo = ({ cars }) => {
+const CarInfo = ({ car }) => {
   return (
     <>
       <Grid item md={4}>
         <Box className="title-car">
-          <Typography variant="h4">{cars.name}</Typography>
+          <Typography variant="h4">{car.name}</Typography>
         </Box>
         <Typography variant="p">
           {<LocationCity />}
-          {cars.city}
+          {car.city}
         </Typography>
 
         <Box sx={{ color: 'gray', mt: 2 }}>
           <Typography variant="p" sx={{ borderRight: '0.1em solid gray', padding: '0.5em' }}>
-            {cars.year}
+            {car.year}
           </Typography>
 
           <Typography variant="p" sx={{ borderRight: '0.1em solid gray', padding: '0.5em' }}>
-            {cars.km}km
+            {car.km}km
           </Typography>
 
           <Typography variant="p" sx={{ borderRight: '0.1em solid gray', padding: '0.5em' }}>
-            {cars.engine}
+            {car.engine}
           </Typography>
 
           <Typography variant="p" sx={{ borderRight: '0.1em solid gray', padding: '0.5em' }}>
-            {cars.power} cc
+            {car.power} cc
           </Typography>
 
           <Typography variant="p" sx={{ padding: '0.5em' }}>
-            {cars.transmission}
+            {car.transmission}
           </Typography>
         </Box>
         <br></br>
         <Typography variant="p" sx={{ m: 2 }}>
           Updated:{' '}
           <Box component="span" sx={{ fontWeight: 'bold' }}>
-            {moment(cars.updated_at).fromNow()}
+            {moment(car.updated_at).fromNow()}
           </Box>
         </Typography>
       </Grid>

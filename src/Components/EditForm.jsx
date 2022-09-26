@@ -13,22 +13,22 @@ const EditForm = (props) => {
 
   const formik = useFormik({
     initialValues: {
-      id: props.cars.id,
-      name: props.cars.name,
-      year: props.cars.year,
-      price: props.cars.price,
-      phone: props.cars.phone,
-      image: props.cars.image,
-      city: props.cars.city,
-      user: props.cars.user,
-      engine: props.cars.engine,
-      power: props.cars.power,
-      transmission: props.cars.transmission,
-      km: props.cars.km,
-      updated_at: props.cars.updated_at,
-      ownership: props.cars.ownership,
-      featured: props.cars.featured,
-      terms: props.cars.terms
+      id: props.car.id,
+      name: props.car.name,
+      year: props.car.year,
+      price: props.car.price,
+      phone: props.car.phone,
+      image: props.car.image,
+      city: props.car.city,
+      user: props.car.user,
+      engine: props.car.engine,
+      power: props.car.power,
+      transmission: props.car.transmission,
+      km: props.car.km,
+      updated_at: props.car.updated_at,
+      ownership: props.car.ownership,
+      featured: props.car.featured,
+      terms: props.car.terms
     },
     onSubmit: (values) => {
       values.created_at = Date()

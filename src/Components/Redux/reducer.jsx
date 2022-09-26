@@ -28,7 +28,10 @@ const reducer = (state = initialState.cars, action) => {
         isLoading: false
       }
     case CAR.DELETE_CAR:
-      state.carsData.splice(action.car, 1)
+      state.carsData.splice(
+        state.carsData.findIndex((obj) => obj.id === action.car),
+        1
+      )
       return {
         ...state
       }
