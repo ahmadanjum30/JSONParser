@@ -13,22 +13,7 @@ const EditForm = (props) => {
 
   const formik = useFormik({
     initialValues: {
-      id: props.car.id,
-      name: props.car.name,
-      year: props.car.year,
-      price: props.car.price,
-      phone: props.car.phone,
-      image: props.car.image,
-      city: props.car.city,
-      user: props.car.user,
-      engine: props.car.engine,
-      power: props.car.power,
-      transmission: props.car.transmission,
-      km: props.car.km,
-      updated_at: props.car.updated_at,
-      ownership: props.car.ownership,
-      featured: props.car.featured,
-      terms: props.car.terms
+      ...props.car
     },
     onSubmit: (values) => {
       values.created_at = Date()
@@ -44,7 +29,8 @@ const EditForm = (props) => {
           onSubmit={(e) => {
             e.preventDefault()
             formik.handleSubmit()
-          }}>
+          }}
+          onChange={formik.handleChange}>
           <Grid container spacing={2}>
             <Grid item md={6}>
               <TextField
@@ -52,16 +38,14 @@ const EditForm = (props) => {
                 name="name"
                 label="Name"
                 variant="outlined"
-                value={formik.values.name}
-                onChange={formik.handleChange}></TextField>
+                value={formik.values.name}></TextField>
               <TextField
                 sx={{ m: 0.5 }}
                 required={true}
                 label="Power"
                 variant="outlined"
                 name="power"
-                value={formik.values.power}
-                onChange={formik.handleChange}></TextField>
+                value={formik.values.power}></TextField>
               <TextField
                 sx={{ m: 0.5 }}
                 id="outlined-basic"
@@ -69,16 +53,14 @@ const EditForm = (props) => {
                 variant="outlined"
                 required={true}
                 name="year"
-                value={formik.values.year}
-                onChange={formik.handleChange}></TextField>
+                value={formik.values.year}></TextField>
               <TextField
                 sx={{ m: 0.5 }}
                 label="Phone No."
                 variant="outlined"
                 required={true}
                 name="phone"
-                value={formik.values.phone}
-                onChange={formik.handleChange}></TextField>
+                value={formik.values.phone}></TextField>
             </Grid>
             <Grid item md={6}>
               <TextField
@@ -87,22 +69,19 @@ const EditForm = (props) => {
                 variant="outlined"
                 required={true}
                 value={formik.values.price}
-                name="price"
-                onChange={formik.handleChange}></TextField>
+                name="price"></TextField>
               <TextField
                 sx={{ m: 0.5 }}
                 label="City"
                 variant="outlined"
                 required={true}
                 value={formik.values.city}
-                name="city"
-                onChange={formik.handleChange}></TextField>
+                name="city"></TextField>
               <Button
                 variant="contained"
                 component="label"
                 sx={{ m: 1 }}
-                value={formik.values.image}
-                onChange={formik.handleChange}>
+                value={formik.values.image}>
                 Upload
                 <input type="file" name="image" hidden />
               </Button>
