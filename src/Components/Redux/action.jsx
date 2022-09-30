@@ -8,12 +8,13 @@ export const requestCars = () => async (dispatch) => {
   })
 
   try {
-    const json = await axios.get('MOCK_DATA.json')
-    dispatch({
-      type: CAR.LOAD_SUCCESS,
-      carsData: json.data,
-      isError: false
-    })
+      axios.get('MOCK_DATA.json').then(res => {
+        dispatch({
+          type: CAR.LOAD_SUCCESS,
+          carsData: res.data,
+          isError: false
+        })
+      })    
   } catch (e) {
     dispatch({
       type: CAR.LOAD_SUCCESS,
