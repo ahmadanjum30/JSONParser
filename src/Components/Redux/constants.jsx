@@ -1,0 +1,12 @@
+const CAR = {
+  LOAD: 'REQUEST_CARS_DATA',
+  LOAD_SUCCESS: 'RECEIVE_CARS_DATA',
+  DELETE_CAR: 'DELETE_CAR',
+  UPDATE_CAR: 'UPDATE_CAR'
+}
+
+export const USER = {
+  LOGIN: 'LOGIN'
+}
+
+export default CAR

@@ -1,0 +1,23 @@
+.price-car {
+  margin-bottom: 1em;
+}
+
+img {
+  object-fit: fill;
+  object-position: top;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.created-at {
+  margin: 2em 0em;
+}
+
+.title-car {
+  color: darkblue;
+}
+
+.price-car {
+  color: darkblue;
+}
